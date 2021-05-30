@@ -35,13 +35,13 @@ const ActionButton = props => {
 
   useEffect(() => {
     if (props.active) {
-      Animated.spring(anim.current, { toValue: 1 }).start();
+      Animated.spring(anim.current, { toValue: 1, useNativeDriver: false }).start();
       setActive(true);
       setResetToken(props.resetToken);
     } else {
       props.onReset && props.onReset();
 
-      Animated.spring(anim.current, { toValue: 0 }).start();
+      Animated.spring(anim.current, { toValue: 0, useNativeDriver: false }).start();
       timeout.current = setTimeout(() => {
         setActive(false);
         setResetToken(props.resetToken);
@@ -101,7 +101,15 @@ const ActionButton = props => {
       }),
       width: props.size,
       height: props.size,
-      borderRadius: props.size / 2
+      borderRadius: props.size / 2,
+      shadowOpacity: 0.35,
+      shadowOffset: {
+        width: 0,
+        height: 5
+      },
+      shadowColor: "#000",
+      shadowRadius: 3,
+      elevation: 5
     };
 
     const buttonStyle = {
@@ -254,7 +262,7 @@ const ActionButton = props => {
     if (active) return reset(animate);
 
     if (animate) {
-      Animated.spring(anim.current, { toValue: 1 }).start();
+      Animated.spring(anim.current, { toValue: 1, useNativeDriver: false }).start();
     } else {
       anim.current.setValue(1);
     }
@@ -266,7 +274,7 @@ const ActionButton = props => {
     if (props.onReset) props.onReset();
 
     if (animate) {
-      Animated.spring(anim.current, { toValue: 0 }).start();
+      Animated.spring(anim.current, { toValue: 0, useNativeDriver: false }).start();
     } else {
       anim.current.setValue(0);
     }
